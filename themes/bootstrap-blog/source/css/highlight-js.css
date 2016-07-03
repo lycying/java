@@ -9,11 +9,11 @@
 }
 
 .highlight .gutter pre {
-  border: 0;
+  border: 1px solid #ccc;
   text-align: right;
   padding-left: 5px;
   padding-right: 5px;
-  background-color:#99CCCC ;
+  background-color:#CCFFCC;
 }
 .highlight .code {
   width: 100%;
@@ -34,7 +34,7 @@
 
 .highlight pre {
   margin: 0;
-  background-color: #eeeeee;
+  background-color: #fff;
 }
 
 .highlight .comment,
