@@ -1,0 +1,35 @@
+# Header
+navbar_brand:
+menu:
+  首页: index.html
+  初级: categories/初级/
+  中级: categories/中级/
+  高级: categories/高级/
+  Github: https://github.com/lycying
+rss: /atom.xml
+
+# Content
+excerpt_link: Read More
+fancybox: true
+
+# Sidebar
+widgets:
+- about         # See also: `about_content`
+- category
+- tagcloud
+- archive
+- recent_posts
+about_widget_content: >
+    写这一系列的目的，请移至<a href="/2015/11/30/getstart/">这里</a>
+
+# widget behavior
+archive_type: 'monthly'
+show_count: true
+
+# Miscellaneous
+google_analytics:
+favicon:
+twitter_id:
+google_plus:
+fb_admins:
+fb_app_id:

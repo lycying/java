@@ -1,12 +1,13 @@
 title: TCP/IP的各种状态
 date: 2015-12-07 18:31:06
-tags:
+tags: [net]
+categories: [初级]
 ---
 
 TCP是一种复杂的协议。其中，状态的转变是个需要理解的脑力活，其状态转变图如下，我们将逐一说明这些状态的意义，其中TIME_WAIT和CLOSE_WAIT是经常考察的状态，Linux下使用netstat可以看到这些状态：
 ![](/tcp-ip-state.png)
 
-#### CLOSED 
+#### CLOSED
 这个没什么好说的了，表示初始状态。
 #### LISTEN
 这个也是非常容易理解的一个状态，表示服务器端的某个SOCKET处于监听状态，可以接受连接了。

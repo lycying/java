@@ -1,6 +1,7 @@
 title: java的long，天生的陷阱专家
 date: 2016-04-06 16:54:35
-tags:
+tags: [object,thread]
+categories: [中级]
 ---
 工作忙，好久没更新了。有些朋友反映有些东西太难了些。这次来段小程序解解压。
 

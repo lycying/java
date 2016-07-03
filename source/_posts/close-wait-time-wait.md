@@ -1,6 +1,7 @@
 title: TIME_WAIT和CLOSE_WAIT解惑
 date: 2015-12-07 22:57:39
-tags:
+tags: [net]
+categories: [中级]
 ---
 
 #### 网络状态的获取
@@ -30,34 +31,34 @@ Linux的文件句柄是有限的，如果一些状态保持着不消失，将逐
 
 拿HttpClient来说，[更详细的分析](http://blog.csdn.net/shootyou/article/details/6615051)：
 ```
-try { 
-	client = HttpConnectionManager.getHttpClient(); 
-	HttpGet get = new HttpGet(); 
-	get.setURI(new URI(urlPath)); 
-	HttpResponse response = client.execute(get); 
-	if (response.getStatusLine ().getStatusCode () != 200) { 
-		return null; 
-	} 
-	HttpEntity entity =response.getEntity(); 
- 
-	if( entity != null ){ 
-		in = entity.getContent(); 
-		..... 
-	} 
-	return sb.toString (); 
-} catch (Exception e) { 	return null; 
-} finally { 
-	if (isr != null){ 
-		try { 
-			isr.close (); 
-		} catch (IOException e) { e.printStackTrace (); } 
-	} 
-	if (in != null){ 
-		try { 
+try {
+	client = HttpConnectionManager.getHttpClient();
+	HttpGet get = new HttpGet();
+	get.setURI(new URI(urlPath));
+	HttpResponse response = client.execute(get);
+	if (response.getStatusLine ().getStatusCode () != 200) {
+		return null;
+	}
+	HttpEntity entity =response.getEntity();
+
+	if( entity != null ){
+		in = entity.getContent();
+		.....
+	}
+	return sb.toString ();
+} catch (Exception e) { 	return null;
+} finally {
+	if (isr != null){
+		try {
+			isr.close ();
+		} catch (IOException e) { e.printStackTrace (); }
+	}
+	if (in != null){
+		try {
 			in.close();
-		} catch (IOException e) { e.printStackTrace (); } 
-	} 
-} 
+		} catch (IOException e) { e.printStackTrace (); }
+	}
+}
 ```
 HttpClient使用我们常用的`InputStream.close()`来确认连接关闭，分析上面的代码，一旦出现`非200`的连接，这个连接将永远僵死在连接池里头，因为inputStream得不到初始化，永远不会调用close()方法了。
 正确方法是调用`HttpGet`的`abort()`方法来终止连接。
@@ -77,13 +78,13 @@ HttpClient使用我们常用的`InputStream.close()`来确认连接关闭，分�
 修改`/etc/sysctl.conf`文件：
 在这个文件中，加入下面的几行内容：
 ```bash
-net.ipv4.tcp_syncookies = 1 
+net.ipv4.tcp_syncookies = 1
  #表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭；
-net.ipv4.tcp_tw_reuse = 1 
+net.ipv4.tcp_tw_reuse = 1
  #表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
-net.ipv4.tcp_tw_recycle = 1 
+net.ipv4.tcp_tw_recycle = 1
  #表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭；
-net.ipv4.tcp_fin_timeout = 5 
+net.ipv4.tcp_fin_timeout = 5
  #修改系统默认的 TIMEOUT 时间;
 ```
 

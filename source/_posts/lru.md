@@ -1,6 +1,7 @@
 title: LRU缓存就像你的鞋柜，附实现攻略
 date: 2016-04-07 14:22:03
-tags:
+tags: [arithmetic]
+categories: [中级]
 ---
 ### 问题
 今天我们讲一下怎么实现一个简单的最近最少使用（LRU）的缓存。
@@ -42,7 +43,7 @@ public static class LRULinkedHashMap<K, V> extends LinkedHashMap<K, V> {
         public LRULinkedHashMap(int initialCapacity, float loadFactor) {
             super(initialCapacity, loadFactor, true);
         }
-        /** 
+        /**
          * @see java.util.LinkedHashMap#removeEldestEntry(java.util.Map.Entry)
          */
         @Override
@@ -60,4 +61,3 @@ public static class LRULinkedHashMap<K, V> extends LinkedHashMap<K, V> {
 - 缓存的数据是否真正有热点数据
 - 缓存的大小一定要限制，否则会有内存撑爆的危险
 - 老生常谈，高并发下一定要注意LRU操作的同步
-

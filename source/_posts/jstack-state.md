@@ -1,11 +1,12 @@
 title: jstack线程dump输出状态解释
 date: 2015-12-09 17:17:26
-tags:
+tags: [shell,tools]
+categories: [中级]
 ---
 执行`jstack`命令，将得到进程的堆栈信息。我一般使用`jstack -l pid`来得到长列表，显示其详细信息。
 有时线程挂起的时候，需要执行`jstack -F pid`来获取。
 <div class="tip">
-在实际运行中，往往一次 dump的信息，还不足以确认问题。建议产生三次 dump信息，如果每次 dump都指向同一个问题，我们才确定问题的典型性。 
+在实际运行中，往往一次 dump的信息，还不足以确认问题。建议产生三次 dump信息，如果每次 dump都指向同一个问题，我们才确定问题的典型性。
 
 堆栈信息只是一种参考，一些正常RUNNING的线程，由于复杂网络环境和IO的影响，也是有问题的，用jstack就无法定位，需要结合对业务代码的理解。
 </div>
@@ -23,9 +24,9 @@ public enum State {
 }```
 
 在dump 文件里，写法可能不太一样：
-- 死锁，Deadlock（重点关注） 
+- 死锁，Deadlock（重点关注）
 - 执行中，Runnable   
-- 等待资源，Waiting on condition（重点关注） 
+- 等待资源，Waiting on condition（重点关注）
 - 等待获取监视器，Waiting on monitor entry（重点关注）
 - 对象等待中，Object.wait() 或 TIMED_WAITING
 - 暂停，Suspended
@@ -54,7 +55,7 @@ public enum State {
 ```
 上面是一个典型的死锁堆栈，t1线程lock在地址`0x22a297a8`，同时t2线程在`waiting to lock`这个地址。更有意思的是，堆栈也记录了发生死锁的代码行数，这对我们定位问题起到很大的帮助。
 
-### Wait on condition 
+### Wait on condition
 **等待资源，或等待某个条件的发生**。具体原因需结合 stacktrace来分析。
 
 - 常见情况是该线程在 sleep，等待 sleep的时间到了时候，将被唤醒。关键字：`TIMED_WAITING`,`sleeping`,`parking`。TIMED_WAITING可能是调用了有超时参数的wait所引起的。parking指线程处于挂起中。

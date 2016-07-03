@@ -1,6 +1,7 @@
 title: 妈妈再也不用担心别人问我是否真正用过redis了
 date: 2015-12-31 14:55:48
-tags:
+tags: [nosql,redis]
+categories: [中级]
 ---
 持续更新...
 
@@ -31,10 +32,10 @@ Redis支持5种数据类型strings, hashes, lists, sets, sorted sets
 
 ### Redis的回收策略
 - volatile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰
-- volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰 
-- volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰 
+- volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰
+- volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰
 - allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰
-- allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰 
+- allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰
 - no-enviction（驱逐）：禁止驱逐数据
 
 ### Redis小命令
@@ -45,7 +46,7 @@ Redis支持5种数据类型strings, hashes, lists, sets, sorted sets
 #连接上redis_001.jr-jr.com，指定host和port
 redis-cli -h redis_001.jr-jr.com -p 3306
 #注意。可以直接在后面跟上命令
-redis-cli -h redis_001.jr-jr.com -p 3306 monitor 
+redis-cli -h redis_001.jr-jr.com -p 3306 monitor
 ```
 #### MONITOR
 MONITOR是一个调试命令，返回服务器处理的每一个命令，它能帮助我们了解在数据库上发生了什么操作。配合grep可以查看是否有你想要的操作。

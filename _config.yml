@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Java面试指南,最专业的面试题
-subtitle:
+title: Java面试指南
+subtitle: 最全最专业的面试题
 description:
 author: lycying@gmail.com
 language: zh-CN
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: hexo-theme-apollo
+theme: bootstrap-blog
 #theme: jr
 
 marked:

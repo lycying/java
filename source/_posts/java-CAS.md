@@ -1,6 +1,7 @@
 title: JAVA-CAS简介以及ABA问题
 date: 2015-12-02 11:46:37
-tags:
+tags: [thread]
+categories: [高级]
 ---
 ## CAS简介
 `java.util.concurrent`包完全建立在CAS之上的，没有CAS就不会有此包。可见CAS的重要性。 CAS:Compare and Swap, 翻译成比较并交换。 `java.util.concurrent`包中借助CAS实现了区别于synchronouse同步锁的一种`乐观锁`。

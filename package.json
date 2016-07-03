@@ -27,6 +27,8 @@
     "hexo-renderer-marked": "^0.2.5",
     "hexo-renderer-stylus": "^0.3.0",
     "hexo-server": "^0.1.2",
+    "hexo-tag-bootstrap": "0.0.8",
+    "hexo-tag-fontawesome": "^1.0.0",
     "install": "^0.4.0"
   }
 }

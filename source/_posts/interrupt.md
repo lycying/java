@@ -1,10 +1,11 @@
 title: interrupt、interrupted 、isInterrupted 区别
 date: 2015-12-04 17:04:39
-tags:
+tags: [thread]
+categories: [中级]
 ---
 [个人认为这个介绍很不错,转了](http://m.oschina.net/blog/121933)
 
-### interrupt 
+### interrupt
 `interrupt`方法用于中断线程。调用该方法的线程的状态为将被置为"中断"状态。
 注意：线程中断仅仅是置线程的中断状态位，不会停止线程。需要用户自己去监视线程的状态为并做处理。支持线程中断的方法（也就是线程中断后会抛出`interruptedException`的方法）就是在监视线程的中断状态，一旦线程的中断状态被置为“中断状态”，就会抛出中断异常。
 
@@ -38,4 +39,3 @@ public boolean isInterrupted () {
 如果这个参数为true，说明返回线程的状态位后，要清掉原来的状态位（恢复成原来情况）。这个参数为false，就是直接返回线程的状态位。
 
 这两个方法很好区分，**只有当前线程才能清除自己的中断位**（对应interrupted（）方法）
-

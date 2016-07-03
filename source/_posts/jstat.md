@@ -1,6 +1,7 @@
 title: jstat详解
 date: 2015-12-02 11:31:31
-tags:
+tags: [tools]
+categories: [中级]
 ---
 #### jstat -gc pid
 可以显示gc的信息，查看gc的次数，及时间。
@@ -49,10 +50,10 @@ perm对象的信息及其占用量。
 - `NGCMN`：年轻代(young)中初始化(最小)的大小 (字节)
 - `NGCMX`：年轻代(young)的最大容量 (字节)
 - `NGC`：年轻代(young)中当前的容量 (字节)
-- `OGCMN`：old代中初始化(最小)的大小 (字节) 
+- `OGCMN`：old代中初始化(最小)的大小 (字节)
 - `OGCMX`：old代的最大容量 (字节)
 - `OGC`：old代当前新生成的容量 (字节)
-- `PGCMN`：perm代中初始化(最小)的大小 (字节) 
+- `PGCMN`：perm代中初始化(最小)的大小 (字节)
 - `PGCMX`：perm代的最大容量 (字节)   
 - `PGC`：perm代当前新生成的容量 (字节)
 - `S0`：年轻代中第一个survivor（幸存区）已使用的占当前容量百分比

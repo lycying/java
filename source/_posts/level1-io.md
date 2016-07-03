@@ -1,6 +1,6 @@
 title: java初级：io
 date: 2015-12-01 12:02:47
-tags:
+tags: 
 categories: [初级]
 ---
 ### Reader/Writer和InputStream/Output Stream有什么区别?

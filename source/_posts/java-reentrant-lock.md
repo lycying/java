@@ -1,6 +1,7 @@
 title: java内置锁的可重入性
 date: 2015-12-10 14:40:25
-tags:
+tags: [thread]
+categories: [初级]
 ---
 <div class="tip">
 锁作为并发共享数据，保证一致性的工具，在JAVA平台有多种实现(如 synchronized 和 ReentrantLock等等) 。在JAVA环境下 ReentrantLock 和synchronized 都是可重入锁。
@@ -15,7 +16,7 @@ public class Child extends Father {
     public synchronized void doSomething() {
         System.out.println("child.doSomething()");
         doAnotherThing(); // 调用自己类中其他的synchronized方法
-         
+
     }
     private synchronized void doAnotherThing() {
         super.doSomething(); // 调用父类的synchronized方法
@@ -67,4 +68,3 @@ public class Test implements Runnable {
 	}
 }
 ```
-
