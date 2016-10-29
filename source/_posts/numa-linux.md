@@ -9,13 +9,13 @@ categories: [linux]
 
 ## 哪些工具可以监测SWAP
 最容易想到的就是free命令了，它指明了当前SWAP的使用情况：
-```shell
+```bash
 shell> free -m
              total       used       free
 Swap:        34175      11374      22801
 ```
 另一个常用的是sar命令，它能列出系统在各个时间的SWAP使用情况：
-```shell
+```bash
 shell> sar -r
 kbswpfree kbswpused  %swpused  kbswpcad
  23345644  11650572     33.29   4656908
@@ -25,7 +25,7 @@ kbswpfree kbswpused  %swpused  kbswpcad
  23346992  11649224     33.29   4648848
 ```
 不过free命令和sar命令显示的都不是实时数据，如果需要，可以使用vmstat命令：
-```shell
+```bash
 shell> vmstat 1
 -----------memory------------- ---swap--
   swpd   free   buff   cache     si   so
@@ -52,7 +52,7 @@ shell> vmstat 1
 坏消息是top命令提供的SWAP信息只是一个理论值，或者更直白一点儿来说它根本就是不可信的（在top里SWAP的计算公式是：SWAP=VIRT-RES）。
 BTW：相比之下，top里的「nFLT」字段更有价值，它表示PageFault的次数。
 那到底我们能不能获取到进程的SWAP情况呢？别着急，看代码：
-```shell
+```bash
 #!/bin/bash
 
 cd /proc
@@ -90,13 +90,13 @@ Swappiness的迷失
 
 内核中的swappiness参数可以用来控制这种行为，缺省情况下，swappiness的值是60：
 
-```shell
+```bash
 shell> sysctl -a | grep swappiness
 vm.swappiness = 60
 ```
 
 它的含义是：如果系统需要内存，有百分之六十的概率执行SWAP。知道了这一点，我们很自然的会想到用下面的方法来降低执行SWAP的概率：
-```shell
+```bash
 shell> echo "vm.swappiness = 1" >> /etc/sysctl.conf
 shell> sysctl -p
 这样做的确可以降低执行SWAP的概率，但并不意味着永远不会执行SWAP。据网友报道某些情况下，直接改为0有可能出现灵异问题，所以建议改为1。
@@ -108,7 +108,7 @@ NUMA在MySQL社区有很多讨论，这里不多说了，直击NUMA和SWAP的恩
 
 大概了解一下NUMA最核心的numactl命令：
 
-```shell
+```bash
 shell> numactl --hardware
 available: 2 nodes (0-1)
 node 0 size: 16131 MB
@@ -124,7 +124,7 @@ node   0   1
 
 需要说明的一点事，numactl命令中看到的各节点剩余内存中时不包括Cache内存的，如果需要知道，我们可以利用drop_caches参数先释放它：
 
-```shell
+```bash
 shell> sysctl vm.drop_caches=1
 注：这步操作可能会引起系统负载的震荡。
 ```
@@ -134,13 +134,15 @@ https://raw.githubusercontent.com/jeremycole/blog-files/master/numa-maps-summary
 
 如果要规避NUMA对SWAP的影响，最简单的方法就是在启动进程的时候禁用它：
 
-```shell
+```bash
 shell> numactl --interleave=all ...
 ```
 
 此外，内核参数zone_reclaim_mode通常也很重要，当某个节点可用内存不足时，如果为0的话，那么系统会倾向于从远程节点分配内存；如果为1的话，那么系统会倾向于从本地节点回收Cache内存。多数时候，Cache对性能很重要，所以0是一个更好的选择。
 
-```shell
+```bash
 shell> echo "vm.zone_reclaim_mode = 0" >> /etc/sysctl.conf
 shell> sysctl -p
 ```
+
+早些年，YouTube曾经被SWAP问题困扰过，他们当时的解决方法很极端：删除SWAP！不得不说这真是艺高人胆大，可惜对芸芸众生的我们而言，这实在是太危险了，因为如此一来，一旦内存耗尽，由于没有SWAP的缓冲，系统会立即开始OOM，结果可能会让问题变得更加复杂，所以大家还是安分守己做个老实人吧。
